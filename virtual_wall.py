@@ -25,19 +25,12 @@ def main():
     ])
     wid_mark = pi.wave_create()
 
-    pi.wave_add_generic([
-        pigpio.pulse(0, 0, khz_to_usec(FREQUENCY)),
-    ])
-    wid_space = pi.wave_create()
-
     pi.wave_chain([
         255, 0,             # loop (A) start
         255, 0,             # loop (B) start
         wid_mark,           # transmit mark wave
         255, 1, 38, 0,      # loop (B) end: 38 times; 38 * 26us = ~ 1000 usec
-        255, 0,             # loop (C) start
-        wid_space,          # transmit space wave
-        255, 1, 38, 0,      # loop (C) end: 38 times; 38 * 26us = ~1000 usec
+        255, 2, 232, 3,     # delay 1000 usec
         255, 3,             # loop (A) repeat forever
     ])
 
